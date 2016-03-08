@@ -6,10 +6,12 @@ namespace KayStrobach\Faq\Domain\Model;
  */
 
 use Doctrine\Common\Collections\ArrayCollection;
+use KayStrobach\Faq\Domain\Repository\AnswerRepository;
+use KayStrobach\Faq\Domain\Traits\CreatorTrait;
 use KayStrobach\Faq\Domain\Traits\RolesTrait;
+use KayStrobach\Faq\Domain\Traits\TimestampsTrait;
 use TYPO3\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
-use TYPO3\Flow\Security\Account;
 
 /**
  * @Flow\Entity
@@ -17,6 +19,8 @@ use TYPO3\Flow\Security\Account;
 class Question
 {
     use RolesTrait;
+    use CreatorTrait;
+    use TimestampsTrait;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -31,13 +35,8 @@ class Question
     protected $question;
 
     /**
-     * @ORM\ManyToOne()
-     * @var Account
-     */
-    protected $creator;
-
-    /**
-     * @ORM\OneToMany(mappedBy="question")
+     * @ORM\OneToMany(mappedBy="question", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OrderBy({"title" = "ASC"})
      * @var ArrayCollection<Answer>
      */
     protected $answers;
@@ -47,6 +46,21 @@ class Question
      * @var string
      */
     protected $category;
+
+    /**
+     * @Flow\Inject()
+     * @var AnswerRepository
+     */
+    protected $answerRepository;
+
+    /**
+     * Question constructor.
+     */
+    public function __construct()
+    {
+        $this->setCreatorFromSecurityContext();
+        $this->initCreationDate();
+    }
 
     /**
      * @return string
@@ -81,22 +95,6 @@ class Question
     }
 
     /**
-     * @return Account
-     */
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
-    /**
-     * @param Account $creator
-     */
-    public function setCreator($creator)
-    {
-        $this->creator = $creator;
-    }
-
-    /**
      * @return ArrayCollection
      */
     public function getAnswers()
@@ -110,5 +108,20 @@ class Question
     public function setAnswers($answers)
     {
         $this->answers = $answers;
+    }
+
+    /**
+     * @param Answer $answer
+     */
+    public function removeAnswer(Answer $answer) {
+        $this->answerRepository->remove($answer);
+        $this->answers->removeElement($answer);
+    }
+
+    /**
+     * @param Answer $answer
+     */
+    public function addAnswer(Answer $answer) {
+        $this->answers->add($answer);
     }
 }

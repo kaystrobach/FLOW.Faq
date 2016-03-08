@@ -1,0 +1,66 @@
+{namespace custom=KayStrobach\Custom\ViewHelpers}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Question
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="title">
+                        <f:translate id="faq_question_title">Title</f:translate>
+                    </label>
+                    <f:form.textfield property="title" class="form-control" id="title" />
+                </div>
+                <div class="form-group">
+                    <label for="title">
+                        <f:translate id="faq_question_expiration">Expiration Date</f:translate>
+                    </label>
+                    <custom:form.dateTimeTextfield property="expirationDate" dateFormat="d.m.Y H:i" class="form-control" id="title" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="question">
+                        <f:translate id="faq_question_question">The question</f:translate>
+                    </label>
+                    <f:form.textarea property="question" class="form-control" id="question" rows="10"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <f:for each="{question.answers}" as="answer" key="key" iteration="iteration">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="answer-heading-{key}">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#answer-{key}" aria-expanded="true" aria-controls="answer-key">
+                        {answer.title}
+                    </a>
+                </h4>
+            </div>
+            <div id="answer-{key}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <f:render partial="Answer/Fields" arguments="{key:key, question:question, answer:answer}" />
+                </div>
+            </div>
+        </div>
+    </f:for>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="answer-heading-new">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#answer-new" aria-expanded="true" aria-controls="answer-new">
+                    <f:translate id="faq_answer_create">Create a new answer</f:translate>
+                </a>
+            </h4>
+        </div>
+        <div id="answer-new" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <f:render partial="Answer/Fields" arguments="{key:'{question.answers -> f:count()}', question:question}" />
+            </div>
+        </div>
+    </div>
+</div>
+

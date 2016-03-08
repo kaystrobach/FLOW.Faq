@@ -5,6 +5,8 @@ namespace KayStrobach\Faq\Domain\Model;
  * This file is part of the KayStrobach.Faq package.
  */
 
+use KayStrobach\Faq\Domain\Traits\CreatorTrait;
+use KayStrobach\Faq\Domain\Traits\TimestampsTrait;
 use TYPO3\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,6 +15,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Answer
 {
+    use CreatorTrait;
+    use TimestampsTrait;
+
     /**
      * @ORM\ManyToOne(inversedBy="answers")
      * @var Question
@@ -30,6 +35,11 @@ class Answer
      * @var string
      */
     protected $answer;
+
+    public function __construct()
+    {
+        $this->initCreationDate();
+    }
 
     /**
      * @return Question

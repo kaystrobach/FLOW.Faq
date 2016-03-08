@@ -1,0 +1,22 @@
+{namespace custom=KayStrobach\Custom\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Title"><f:translate id="faq_title">Frequently asked questions</f:translate>: {question.title}</f:section>
+
+<f:section name="Content">
+    <h1>{question.title}</h1>
+
+    {question.question -> custom:format.purifyHtml()}
+
+    <f:for each="{question.answers}" as="answer">
+        <h2>{answer.title}</h2>
+        <p>
+            {answer.answer -> custom:format.purifyHtml()}
+        </p>
+    </f:for>
+
+    <f:link.action controller="Administration\Question" action="edit" arguments="{question:question}">
+        <f:translate id="faq_edit">Edit</f:translate>
+    </f:link.action>
+
+</f:section>

@@ -1,15 +1,31 @@
 <f:layout name="Default" />
 
-<f:section name="Title">Index view of Standard controller</f:section>
+<f:section name="Title"><f:translate id="faq_title">Frequently asked questions</f:translate></f:section>
 
 <f:section name="Content">
-    <h1>A freshly created Fluid template!</h1>
-    <p>Some data set by the controller:</p>
-    <ul>
-        
-        <f:for each="{foos}" as="foo">
-            <li>{foo}</li>
-        </f:for>
-        
-    </ul>
+    <h1><f:translate id="faq_title">Frequently asked questions</f:translate></h1>
+
+    <f:if condition="{questions}">
+        <f:then>
+            <div class="list-group">
+                <f:for each="{questions}" as="question">
+                    <f:link.action action="show" arguments="{question:question}" class="list-group-item">
+                        <h4 class="list-group-item-heading">{question.title}</h4>
+                        <p class="list-group-item-text">{question.question}</p>
+                    </f:link.action>
+                </f:for>
+            </div>
+        </f:then>
+        <f:else>
+            <div class="alert alert-info">
+                <f:translate id="faq_no_questions">Sorry, have not found any questions for you.</f:translate>
+                <f:translate id="faq_try_later">Please try again later.</f:translate>
+            </div>
+        </f:else>
+    </f:if>
+
+    <f:link.action controller="Administration\Question" action="new">
+        <f:translate id="faq_create">Create</f:translate>
+    </f:link.action>
+
 </f:section>

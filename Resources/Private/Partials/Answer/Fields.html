@@ -1,0 +1,29 @@
+{namespace custom=KayStrobach\Custom\ViewHelpers}
+
+<f:if condition="{question}">
+    <f:form.hidden property="answers.{key}.question" value="{question -> f:format.identifier()}" />
+</f:if>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="title-{key}">
+                <f:translate id="faq_answer_title">Title</f:translate>
+            </label>
+            <f:form.textfield property="answers.{key}.title" class="form-control" id="title-{key}" />
+        </div>
+        <div class="form-group">
+            <label for="expirationDate-{key}">
+                <f:translate id="faq_answer_expiration">Expiration Date</f:translate>
+            </label>
+            <custom:form.dateTimeTextfield property="answers.{key}.expirationDate" dateFormat="d.m.Y H:i" class="form-control" id="expirationDate-{key}" />
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="answers-{key}">
+                <f:translate id="faq_question_answer">The answer</f:translate>
+            </label>
+            <f:form.textarea property="answers.{key}.answer" class="form-control" id="answers-{key}" rows="10"/>
+        </div>
+    </div>
+</div>
