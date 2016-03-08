@@ -6,7 +6,7 @@
     <h1><f:translate id="faq_create_title">Create Question</f:translate></h1>
 
     <f:form action="create" object="{question}" objectName="question">
-        <f:render partial="Question/Fields" arguments="{question:question}" />
+        <f:render partial="Question/Fields" arguments="{question:question, roles:roles}" />
         <f:form.button type="submit" class="btn btn-success pull-right">
             <f:translate id="faq_save">Save</f:translate>
         </f:form.button>

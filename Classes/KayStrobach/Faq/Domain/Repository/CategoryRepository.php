@@ -6,6 +6,7 @@ namespace KayStrobach\Faq\Domain\Repository;
  */
 
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Persistence\QueryInterface;
 use TYPO3\Flow\Persistence\Repository;
 
 /**
@@ -13,7 +14,10 @@ use TYPO3\Flow\Persistence\Repository;
  */
 class CategoryRepository extends Repository
 {
-
-    // add customized methods here
-
+    /**
+     * @var array
+     */
+    protected $defaultOrderings = array(
+        'title' => QueryInterface::ORDER_ASCENDING
+    );
 }

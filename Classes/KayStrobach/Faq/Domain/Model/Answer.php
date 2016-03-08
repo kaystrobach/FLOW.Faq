@@ -6,6 +6,7 @@ namespace KayStrobach\Faq\Domain\Model;
  */
 
 use KayStrobach\Faq\Domain\Traits\CreatorTrait;
+use KayStrobach\Faq\Domain\Traits\RolesTrait;
 use KayStrobach\Faq\Domain\Traits\TimestampsTrait;
 use TYPO3\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Answer
 {
+    use RolesTrait;
     use CreatorTrait;
     use TimestampsTrait;
 

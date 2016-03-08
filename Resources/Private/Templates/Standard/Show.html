@@ -4,7 +4,10 @@
 <f:section name="Title"><f:translate id="faq_title">Frequently asked questions</f:translate>: {question.title}</f:section>
 
 <f:section name="Content">
-    <h1>{question.title}</h1>
+    <h1>
+        <f:link.action action="index" controller="Standard"><span class="glyphicon glyphicon-chevron-left"></span></f:link.action>
+        {question.title}
+    </h1>
 
     {question.question -> custom:format.purifyHtml()}
 

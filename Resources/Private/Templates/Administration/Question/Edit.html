@@ -3,14 +3,54 @@
 <f:section name="Title"><f:translate id="faq_edit_title">Edit Question</f:translate>: {question.title}</f:section>
 
 <f:section name="Content">
-    <h1><f:translate id="faq_edit_title">Edit Question</f:translate>: {question.title}</h1>
+    <h1>
+        <f:link.action action="index" controller="Standard"><span class="glyphicon glyphicon-chevron-left"></span></f:link.action>
+        <f:translate id="faq_edit_title">Edit Question</f:translate>: {question.title}
+    </h1>
 
     <f:form action="update" object="{question}" objectName="question">
-        <f:render partial="Question/Fields" arguments="{question:question}" />
+        <f:render partial="Question/Fields" arguments="{question:question, roles:roles}" />
+
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <f:for each="{question.answers}" as="answer" key="key" iteration="iteration">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="answer-heading-{key}">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#answer-{key}" aria-expanded="true" aria-controls="answer-key">
+                                {answer.title}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="answer-{key}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <f:render partial="Answer/Fields" arguments="{key:key, question:question, answer:answer, roles:roles}" />
+                        </div>
+                    </div>
+                </div>
+            </f:for>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="answer-heading-new">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#answer-new" aria-expanded="true" aria-controls="answer-new">
+                            <f:translate id="faq_answer_create">Create a new answer</f:translate>
+                        </a>
+                    </h4>
+                </div>
+                <div id="answer-new" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <f:render partial="Answer/Fields" arguments="{key:'{question.answers -> f:count()}', question:question, roles:roles}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <f:form.button type="submit" class="btn btn-success pull-right">
             <f:translate id="faq_save">Save</f:translate>
         </f:form.button>
     </f:form>
 
-
+    <script src="//cdn.ckeditor.com/4.5.7/standard-all/ckeditor.js"></script>
+    <script type="text/javascript">
+        CKEDITOR.replaceAll();
+    </script>
 </f:section>

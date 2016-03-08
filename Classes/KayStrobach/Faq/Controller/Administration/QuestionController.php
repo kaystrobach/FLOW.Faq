@@ -8,6 +8,7 @@ namespace KayStrobach\Faq\Controller\Administration;
 
 use KayStrobach\Faq\Domain\Model\Answer;
 use KayStrobach\Faq\Domain\Model\Question;
+use KayStrobach\Faq\Domain\Repository\CategoryRepository;
 use KayStrobach\Faq\Domain\Repository\QuestionRepository;
 use TYPO3\Flow\Annotations as Flow;
 
@@ -16,15 +17,28 @@ class QuestionController extends \TYPO3\Flow\Mvc\Controller\ActionController
 {
     /**
      * @Flow\Inject()
+     * @var CategoryRepository
+     */
+    protected $categoryRepository;
+
+    /**
+     * @Flow\Inject()
      * @var QuestionRepository
      */
     protected $questionRepository;
 
     /**
+     * @var \TYPO3\Flow\Security\Policy\PolicyService
+     * @Flow\Inject
+     */
+    protected $policyService;
+
+    /**
      *
      */
     public function newAction() {
-
+        $this->view->assign('roles', $this->policyService->getRoles());
+        $this->view->assign('categories', $this->categoryRepository->findAll());
     }
 
     /**
@@ -48,6 +62,8 @@ class QuestionController extends \TYPO3\Flow\Mvc\Controller\ActionController
      */
     public function editAction(Question $question) {
         $this->view->assign('question', $question);
+        $this->view->assign('roles', $this->policyService->getRoles());
+        $this->view->assign('categories', $this->categoryRepository->findAll());
     }
 
     /**

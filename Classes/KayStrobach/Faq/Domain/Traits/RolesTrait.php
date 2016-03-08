@@ -19,7 +19,7 @@ trait RolesTrait
 
     /**
      * @Flow\Transient
-     * @var array<Role>
+     * @var array<\TYPO3\Flow\Security\Policy\Role>
      */
     protected $roles;
 
@@ -53,7 +53,7 @@ trait RolesTrait
     /**
      * Returns the roles this account has assigned
      *
-     * @return array<Role> The assigned roles, indexed by role identifier
+     * @return array<\TYPO3\Flow\Security\Policy\Role> The assigned roles, indexed by role identifier
      * @api
      */
     public function getRoles()
@@ -65,7 +65,7 @@ trait RolesTrait
     /**
      * Sets the roles for this account
      *
-     * @param array<Role> $roles An array of \TYPO3\Flow\Security\Policy\Role objects
+     * @param array<\TYPO3\Flow\Security\Policy\Role> $roles An array of \TYPO3\Flow\Security\Policy\Role objects
      * @return void
      * @throws \InvalidArgumentException
      * @api
@@ -75,7 +75,7 @@ trait RolesTrait
         $this->roleIdentifiers = array();
         $this->roles = array();
         foreach ($roles as $role) {
-            if (!$role instanceof Role) {
+            if (!$role instanceof \TYPO3\Flow\Security\Policy\Role) {
                 throw new \InvalidArgumentException(sprintf('setRoles() only accepts an array of \TYPO3\Flow\Security\Policy\Role instances, given: "%s"', gettype($role)), 1397125997);
             }
             $this->addRole($role);
@@ -85,11 +85,11 @@ trait RolesTrait
     /**
      * Return if the account has a certain role
      *
-     * @param Role $role
+     * @param \TYPO3\Flow\Security\Policy\Role $role
      * @return boolean
      * @api
      */
-    public function hasRole(Role $role)
+    public function hasRole(\TYPO3\Flow\Security\Policy\Role $role)
     {
         $this->initializeRoles();
         return array_key_exists($role->getIdentifier(), $this->roles);
@@ -98,12 +98,12 @@ trait RolesTrait
     /**
      * Adds a role to this account
      *
-     * @param Role $role
+     * @param \TYPO3\Flow\Security\Policy\Role $role
      * @return void
      * @throws \InvalidArgumentException
      * @api
      */
-    public function addRole(Role $role)
+    public function addRole(\TYPO3\Flow\Security\Policy\Role $role)
     {
         if ($role->isAbstract()) {
             throw new \InvalidArgumentException(sprintf('Abstract roles can\'t be assigned to accounts directly, but the role "%s" is marked abstract', $role->getIdentifier()), 1399900657);
@@ -119,11 +119,11 @@ trait RolesTrait
     /**
      * Removes a role from this account
      *
-     * @param Role $role
+     * @param \TYPO3\Flow\Security\Policy\Role $role
      * @return void
      * @api
      */
-    public function removeRole(Role $role)
+    public function removeRole(\TYPO3\Flow\Security\Policy\Role $role)
     {
         $this->initializeRoles();
         if ($this->hasRole($role)) {
