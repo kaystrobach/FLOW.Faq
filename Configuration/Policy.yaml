@@ -1,0 +1,20 @@
+privilegeTargets:
+  TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+    KayStrobach_Faq_Administration:
+      matcher: 'method(KayStrobach\Faq\Controller\Administration\.*->.*())'
+    KayStrobach_Faq:
+      matcher: 'method(KayStrobach\Faq\Controller\.*->.*())'
+roles:
+  'KayStrobach.Faq:FaqReader':
+    privileges:
+      -
+        privilegeTarget: KayStrobach_Faq
+        permission: GRANT
+  'KayStrobach.Faq:FaqManager':
+    privileges:
+      -
+        privilegeTarget: KayStrobach_Faq
+        permission: GRANT
+      -
+        privilegeTarget: KayStrobach_Faq_Administration
+        permission: GRANT

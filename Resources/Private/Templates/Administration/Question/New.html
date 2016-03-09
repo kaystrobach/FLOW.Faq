@@ -3,14 +3,20 @@
 <f:section name="Title"><f:translate id="faq_create_title">Create Question</f:translate></f:section>
 
 <f:section name="Content">
+    <f:render partial="Toolbar" arguments="{backAction:'index', backController:'Standard'}"/>
+
     <h1><f:translate id="faq_create_title">Create Question</f:translate></h1>
 
     <f:form action="create" object="{question}" objectName="question">
-        <f:render partial="Question/Fields" arguments="{question:question, roles:roles}" />
+        <f:render partial="Question/Fields" arguments="{question:question, roles:roles, categories: categories}" />
         <f:form.button type="submit" class="btn btn-success pull-right">
             <f:translate id="faq_save">Save</f:translate>
         </f:form.button>
     </f:form>
 
+    <script src="//cdn.ckeditor.com/4.5.7/standard-all/ckeditor.js"></script>
+    <script type="text/javascript">
+        CKEDITOR.replaceAll();
+    </script>
 
 </f:section>

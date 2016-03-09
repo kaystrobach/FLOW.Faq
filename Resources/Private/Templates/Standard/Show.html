@@ -4,8 +4,9 @@
 <f:section name="Title"><f:translate id="faq_title">Frequently asked questions</f:translate>: {question.title}</f:section>
 
 <f:section name="Content">
+    <f:render partial="Toolbar" arguments="{backAction:'index', backController:'Standard', editQuestion:question}"/>
+
     <h1>
-        <f:link.action action="index" controller="Standard"><span class="glyphicon glyphicon-chevron-left"></span></f:link.action>
         {question.title}
     </h1>
 
@@ -17,9 +18,4 @@
             {answer.answer -> custom:format.purifyHtml()}
         </p>
     </f:for>
-
-    <f:link.action controller="Administration\Question" action="edit" arguments="{question:question}">
-        <f:translate id="faq_edit">Edit</f:translate>
-    </f:link.action>
-
 </f:section>

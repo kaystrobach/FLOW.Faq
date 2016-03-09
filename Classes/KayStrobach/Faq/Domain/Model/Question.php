@@ -42,8 +42,8 @@ class Question
     protected $answers;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     * @var string
+     * @ORM\ManyToOne()
+     * @var Category
      */
     protected $category;
 
@@ -123,5 +123,21 @@ class Question
      */
     public function addAnswer(Answer $answer) {
         $this->answers->add($answer);
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 }

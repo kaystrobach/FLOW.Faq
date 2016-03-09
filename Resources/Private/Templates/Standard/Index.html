@@ -3,20 +3,41 @@
 <f:section name="Title"><f:translate id="faq_title">Frequently asked questions</f:translate></f:section>
 
 <f:section name="Content">
+    <f:security.ifAccess privilegeTarget="KayStrobach_Faq_Administration">
+        <f:then>
+            <f:render partial="Toolbar" arguments="{createCategory:1, createQuestion:1}" />
+        </f:then>
+    </f:security.ifAccess>
+
+
     <h1><f:translate id="faq_title">Frequently asked questions</f:translate></h1>
 
     <f:if condition="{questions}">
         <f:then>
             <div class="list-group">
-                <f:for each="{questions}" as="question">
-                    <f:link.action action="show" arguments="{question:question}" class="list-group-item">
-                        <h4 class="list-group-item-heading">{question.title}</h4>
-                        <p class="list-group-item-text">
-                            <f:format.crop maxCharacters="100"><f:format.stripTags>{question.question}</f:format.stripTags></f:format.crop>
+                <f:groupedFor each="{questions}" as="groupedQuestions" groupBy="category" groupKey="category">
+                    <h2>
+                        <f:if condition="{category.title}">
+                            <f:then>
+                                {category.title}
+                            </f:then>
+                            <f:else>
+                                <f:translate id="faq_no_category_title">Unnamed category</f:translate>
+                            </f:else>
+                        </f:if>
+                    </h2>
 
-                        </p>
-                    </f:link.action>
-                </f:for>
+
+                    <f:for each="{groupedQuestions}" as="question">
+                        <f:link.action action="show" arguments="{question:question}" class="list-group-item">
+                            <h4 class="list-group-item-heading">{question.title}</h4>
+                            <p class="list-group-item-text">
+                                <f:format.crop maxCharacters="100"><f:format.stripTags>{question.question}</f:format.stripTags></f:format.crop>
+
+                            </p>
+                        </f:link.action>
+                    </f:for>
+                </f:groupedFor>
             </div>
         </f:then>
         <f:else>
@@ -26,9 +47,4 @@
             </div>
         </f:else>
     </f:if>
-
-    <f:link.action controller="Administration\Question" action="new">
-        <f:translate id="faq_create">Create</f:translate>
-    </f:link.action>
-
 </f:section>

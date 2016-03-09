@@ -3,13 +3,14 @@
 <f:section name="Title"><f:translate id="faq_edit_title">Edit Question</f:translate>: {question.title}</f:section>
 
 <f:section name="Content">
+    <f:render partial="Toolbar" arguments="{backAction:'index', backController:'Standard'}"/>
+
     <h1>
-        <f:link.action action="index" controller="Standard"><span class="glyphicon glyphicon-chevron-left"></span></f:link.action>
         <f:translate id="faq_edit_title">Edit Question</f:translate>: {question.title}
     </h1>
 
     <f:form action="update" object="{question}" objectName="question">
-        <f:render partial="Question/Fields" arguments="{question:question, roles:roles}" />
+        <f:render partial="Question/Fields" arguments="{question:question, roles:roles, categories: categories}" />
 
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <f:for each="{question.answers}" as="answer" key="key" iteration="iteration">

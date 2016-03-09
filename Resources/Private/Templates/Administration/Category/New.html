@@ -1,0 +1,17 @@
+<f:layout name="Default" />
+
+<f:section name="Title"><f:translate id="faq_create_category_title">Create Category</f:translate></f:section>
+
+<f:section name="Content">
+    <f:render partial="Toolbar" arguments="{backAction:'index', backController:'Standard'}"/>
+
+    <h1><f:translate id="faq_create_category_title">Create Category</f:translate></h1>
+
+    <f:form action="create" object="{category}" objectName="category">
+        <f:render partial="Category/Fields" arguments="{category:category}" />
+        <f:form.button type="submit" class="btn btn-success pull-right">
+            <f:translate id="faq_save">Save</f:translate>
+        </f:form.button>
+    </f:form>
+
+</f:section>

@@ -33,6 +33,14 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
+                    <label for="category">
+                        <f:translate id="faq_answer_category">Category</f:translate>
+                    </label>
+                    <f:form.select property="category" options="{categories}"  id="category" optionLabelField="title" prependOptionLabel="" class="form-control" />
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
                     <label for="roles">
                         <f:translate id="faq_answer_roles">Roles</f:translate>
                     </label>
