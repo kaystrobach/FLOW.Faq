@@ -18,6 +18,10 @@ class CategoryController extends \TYPO3\Flow\Mvc\Controller\ActionController
      *
      */
     public function indexAction() {
+        $this->redirect(
+            'index',
+            'Standard'
+        );
         $this->view->assign('categories', $this->categoryRepository->findAll());
     }
 

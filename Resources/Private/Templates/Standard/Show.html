@@ -6,16 +6,37 @@
 <f:section name="Content">
     <f:render partial="Toolbar" arguments="{backAction:'index', backController:'Standard', editQuestion:question}"/>
 
-    <h1>
-        {question.title}
-    </h1>
+    <div class="well">
+        <h1>
+            {question.title}
+        </h1>
 
-    {question.question -> custom:format.purifyHtml()}
+        {question.question -> custom:format.purifyHtml()}
+    </div>
 
-    <f:for each="{question.answers}" as="answer">
-        <h2>{answer.title}</h2>
-        <p>
-            {answer.answer -> custom:format.purifyHtml()}
-        </p>
-    </f:for>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <f:translate id="faq_answers">Answers</f:translate>
+        </div>
+        <div class="panel-body">
+            <f:for each="{question.answers}" as="answer" iteration="iteration">
+                <f:if condition="{iteration.isFirst}">
+                    <f:else>
+                        <hr>
+                    </f:else>
+                </f:if>
+
+                <p>
+                    <strong>{answer.title}</strong>
+                </p>
+
+                {answer.answer -> custom:format.purifyHtml()}
+
+            </f:for>
+        </div>
+    </div>
+
+
+
 </f:section>
